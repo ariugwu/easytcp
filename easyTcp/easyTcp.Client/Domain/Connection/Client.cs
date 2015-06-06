@@ -35,7 +35,7 @@ namespace easyTcp.Client.Domain.Connection
 
             client.Connect(serverEndPoint);
             
-            ReceiveAsync(client.Client); // Setup our async listener for broadcasts and such from the server.
+            //ReceiveAsync(client.Client); // Setup our async listener for broadcasts and such from the server.
             
             // Create our console.
             var trap = true;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -106,9 +107,25 @@ namespace easyTcp.Server.Domain.Connection
             StateObject state = (StateObject)ar.AsyncState;
             Socket handler = state.workSocket;
 
-            // Read data from the client socket. 
-            int bytesRead = handler.EndReceive(ar);
+            int bytesRead = 0;
 
+            // Read data from the client socket.
+            // If the client closes it will throw an exception here. 
+            try
+            {
+                bytesRead = handler.EndReceive(ar);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Connection with client [{0}] lost with message: {1}", handler.RemoteEndPoint, ex.Message);
+
+                //Do some cleanup: Remove any connections that are closed.
+                foreach (var c in Connections.Where(x => !x.workSocket.Connected)) Connections.Remove(c);
+
+                return;
+            }
+            
+            
             if (bytesRead > 0)
             {
                 Request request = ByteArrayToRequest(state.buffer);
@@ -125,6 +142,9 @@ namespace easyTcp.Server.Domain.Connection
             {
                 Send(handler, OnEmptyRequest());
             }
+
+            handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
+                new AsyncCallback(ReadCallback), state);
         }
 
         private void Send(Socket handler, Response response)
