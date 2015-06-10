@@ -1,7 +1,6 @@
 ﻿using System;
-using easyTcp.Common.Model;
 
-namespace easyTcp.Server.Domain.Connection
+namespace easyTcp.Common.Model.Server
 {
     public class DefaultProcessStartegy : IProcessStrategy
     {

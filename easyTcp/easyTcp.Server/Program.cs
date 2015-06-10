@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net;
 using easyTcp.Common.Model;
+using easyTcp.Common.Model.Server;
 
 namespace easyTcp.Server
 {
@@ -8,7 +9,7 @@ namespace easyTcp.Server
     {
         static void Main(string[] args)
         {
-            var wat = new Domain.Connection.AsyncListener() { Connections = new List<StateObject>() };
+            var wat = new AsyncListener() { Connections = new List<StateObject>() };
             wat.StartListening(IPAddress.Parse("127.0.0.1"), 4000);
         }
     }

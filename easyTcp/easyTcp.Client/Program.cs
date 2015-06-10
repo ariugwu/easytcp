@@ -1,5 +1,6 @@
 ﻿using System.Net;
-using easyTcp.Client.Domain.Render;
+using easyTcp.Common.Model.Client.Parse;
+using easyTcp.Common.Model.Client.Render;
 
 namespace easyTcp.Client
 {
@@ -7,8 +8,9 @@ namespace easyTcp.Client
     {
         static void Main(string[] args)
         {
-            var client = new Domain.Connection.Client();
-            client.Start(IPAddress.Parse("127.0.0.1"), 4000, new DefaultRenderStrategy());
+            var client = new Common.Model.Client.Connection.Client();
+            client.Start(IPAddress.Parse("127.0.0.1"), 4000, new DefaultRenderStrategy(), new DefaultParseStrategy());
+
         }
     }
 }

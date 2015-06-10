@@ -1,6 +1,4 @@
-﻿using easyTcp.Common.Model;
-
-namespace easyTcp.Client.Domain.Render
+﻿namespace easyTcp.Common.Model.Client.Render
 {
     public interface IRenderStrategy
     {

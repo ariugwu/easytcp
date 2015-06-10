@@ -4,10 +4,10 @@ using System.Net;
 using System.Net.Sockets;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
-using easyTcp.Client.Domain.Render;
-using easyTcp.Common.Model;
+using easyTcp.Common.Model.Client.Parse;
+using easyTcp.Common.Model.Client.Render;
 
-namespace easyTcp.Client.Domain.Connection
+namespace easyTcp.Common.Model.Client.Connection
 {
 
     public class Client
@@ -23,12 +23,14 @@ namespace easyTcp.Client.Domain.Connection
             new ManualResetEvent(false);
 
         private IRenderStrategy _renderStrategy;
+        private IParseStrategy _parseStrategy;
 
-        public void Start(IPAddress ip, int port, IRenderStrategy renderStrategy)
+        public void Start(IPAddress ip, int port, IRenderStrategy renderStrategy, IParseStrategy parseStrategy)
         {
 
             _renderStrategy = renderStrategy;
-            
+            _parseStrategy = parseStrategy;
+
             TcpClient client = new TcpClient();
 
             IPEndPoint serverEndPoint = new IPEndPoint(ip, port);
@@ -51,7 +53,7 @@ namespace easyTcp.Client.Domain.Connection
                     continue;
                 }
 
-                byte[] buffer = ObjectToByteArray(new Request() { Command = data });
+                byte[] buffer = ObjectToByteArray(_parseStrategy.Parse(data));
 
                 client.Client.Send(buffer);
 

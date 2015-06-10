@@ -6,9 +6,8 @@ using System.Net;
 using System.Net.Sockets;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
-using easyTcp.Common.Model;
 
-namespace easyTcp.Server.Domain.Connection
+namespace easyTcp.Common.Model.Server
 {
     public class AsyncListener
     {
@@ -132,7 +131,7 @@ namespace easyTcp.Server.Domain.Connection
 
                 // All the data has been read from the 
                 // client. Display it on the console.
-                Console.WriteLine("Request Received from socket {0}. \n Command : {1}", state.workSocket.RemoteEndPoint, request.Command);
+                Console.WriteLine("Request Received from socket {0}. \n Command : {1}", state.workSocket.RemoteEndPoint, request.Payload.ToString());
 
                 // Process the command.
                 Send(handler, ProcessRequest(request));

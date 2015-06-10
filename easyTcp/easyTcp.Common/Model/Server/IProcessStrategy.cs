@@ -1,6 +1,4 @@
-﻿using easyTcp.Common.Model;
-
-namespace easyTcp.Server.Domain.Connection
+﻿namespace easyTcp.Common.Model.Server
 {
     public interface IProcessStrategy
     {
