@@ -44,8 +44,7 @@ namespace easyTcp.Common.Model.Client.Connection
 
             while (trap)
             {
-                Console.Write("> ");
-                var data = Console.ReadLine();
+                var data = _parseStrategy.CommandPrompt();
 
                 if (data != null && data.Trim().ToLower().Equals("q"))
                 {

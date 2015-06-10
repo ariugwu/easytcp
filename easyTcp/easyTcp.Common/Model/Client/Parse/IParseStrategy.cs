@@ -8,6 +8,8 @@ namespace easyTcp.Common.Model.Client.Parse
 {
     public interface IParseStrategy
     {
+        string CommandPrompt();
+
         Request Parse(string command);
     }
 }
